@@ -8,19 +8,19 @@
 <header>Polls with Django</header>
 <main>
     <h1>Question n° {{question.id}}:</h1>
-    <fieldset>
-        <legend>{{question.question_text}}</legend>
-        {% for choice in question.choice_set.all %}
-        <div>
-            <input type="radio" id="{{choice.id}}" name="{{question.id}}" value="{{choice}}"
-                   checked>
-            <label for="{{choice.id}}">{{choice.choice_text}}</label>
-        </div>
-        {% endfor %}
-
-        <input type="submit" name="{{question.id}}" value="Submit">
-    </fieldset>
-
+    <!--Ne pas déclarer vote avec polls:vote comme dans le tuto : la route est déjà déclarée avec le nom 'vote'-->
+    <form action="{% url 'vote' question.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1>{{ question.question_text }}</h1></legend>
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% endfor %}
+        </fieldset>
+        <input type="submit" value="Vote">
+    </form>
 </main>
 <footer>Diane & Django - 2022</footer>
 
