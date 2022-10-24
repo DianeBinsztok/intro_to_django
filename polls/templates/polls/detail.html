@@ -12,9 +12,9 @@
         <legend>{{question.question_text}}</legend>
         {% for choice in question.choice_set.all %}
         <div>
-            <input type="radio" id="{{choice}}" name="{{question.id}}" value="{{choice}}"
+            <input type="radio" id="{{choice.id}}" name="{{question.id}}" value="{{choice}}"
                    checked>
-            <label for="{{choice}}">{{choice}}</label>
+            <label for="{{choice.id}}">{{choice.choice_text}}</label>
         </div>
         {% endfor %}
 
